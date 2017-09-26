@@ -1,0 +1,15 @@
+development:
+  adapter: mysql2
+  host: localhost
+  user: root
+  password: ''
+  database: echoloid
+  max_connections: 10
+
+production:
+  adapter: mysql2
+  host: localhost
+  user: root
+  password: ''
+  database: echoloid
+  max_connections: 10
