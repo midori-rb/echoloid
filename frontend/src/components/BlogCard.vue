@@ -1,18 +1,20 @@
 <template lang="pug">
 .blog-card
-  img.thumbnail(:src="thumbnail")
-  h2
-    | {{ title }}
-  p
-    b 
-      | {{ author }}
-    | &nbsp;Published on&nbsp;
-    b
-      |{{ date }}
-  p
-    | {{ abstract }}
-  router-link(:to="{ name: 'post', params: { postId: id }}")
-    | Continue Reading
+  el-card(:body-style="{padding: '0px'}")
+    img.image(:src="thumbnail")
+    .content
+      div
+        | {{ title }}
+      .abstract
+        | {{ abstract }}
+      .bottom.clearfix
+        span.time
+          | Published by
+          | {{ author }}
+          | on
+          | {{ date }}
+        el-button.button(type="text", @click="$router.push({ name: 'post', params: { postId: id }})")
+          | Continue Reading
 </template>
 
 <script>
@@ -46,7 +48,7 @@ export default {
     },
     date: {
       type: String,
-      default: '2017-01-01',
+      default: '2017-10-22',
     },
   },
 };
@@ -55,6 +57,35 @@ export default {
 <style lang="stylus" scoped>
 .blog-card
   padding 0 0 20px 0
-.thumbnail
+
+.abstract
+  font-size 13px
+  color #999
+
+.time
+  font-size 13px
+  color #999
+
+.content
+  padding: 14px
+
+.bottom
+  margin-top 13px
+  line-height 12px
+
+.button 
+  padding 0
+  float right
+
+.image 
   width 100%
+  display block
+
+.clearfix:before,
+.clearfix:after
+  display table
+  content ""
+
+.clearfix:after
+  clear both
 </style>

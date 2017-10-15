@@ -66,7 +66,7 @@ class PostRoute < Midori::API
     Atom.where(id: req[:atoms], post_id: nil).map do |atom|
       post.add_atom(atom)
     end
-    ''
+    {}.to_json
   end
 
   put '/:post_id' do
@@ -84,13 +84,13 @@ class PostRoute < Midori::API
     Atom.where(id: req[:atoms], post_id: nil)&.map do |atom|
       post.add_atom(atom)
     end
-    ''
+    {}.to_json
   end
 
   delete '/:post_id' do
     user = UserService.auth!(request)
     raise UnauthorizedError unless user.editable?
     Post.where(id: request.params[:post_id])&.delete
-    ''
+    {}.to_json
   end
 end

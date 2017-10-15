@@ -1,10 +1,15 @@
 <template lang="pug">
 .login
-  .login-box
-    input.input(:placeholder="$t('username')", v-model="username")
-    input.input(:placeholder="$t('password')", v-model="password", type="password")
-    button.button(@click="login")
-      | {{ $t('login') }}
+  el-form(:model="user", label-width="100px")
+    el-form-item(:label="$t('username')")
+      el-input(v-model="user.username")
+    el-form-item(:label="$t('password')" prop="pass")
+      el-input(type="password", v-model="user.password", auto-complete="off")
+    el-form-item
+      el-button(type="primary", @click="login")
+        | {{ $t('login') }}
+      el-button(@click="reset")
+        | Reset
 </template>
 
 <script>
@@ -15,8 +20,10 @@ export default {
   components: {},
   data() {
     return {
-      username: '',
-      password: '',
+      user: {
+        username: '',
+        password: '',
+      },
     };
   },
   methods: {
@@ -24,10 +31,11 @@ export default {
       actionLogin: 'login',
     }),
     login() {
-      this.actionLogin({
-        username: this.username,
-        password: this.password,
-      });
+      this.actionLogin(this.user);
+    },
+    reset() {
+      this.user.username = '';
+      this.user.password = '';
     },
   },
 };
@@ -40,20 +48,4 @@ export default {
   display flex
   align-items center
   justify-content center
-.input
-  width: 80%
-  margin: 12px 12px 12px 12px
-  padding: 16px
-  text-align: center
-  font-size: 20px
-.button
-  width: 80%
-  margin: 12px 12px 12px 12px
-  box-sizing: content-box
-  background: colorPrimary
-  border: none
-  color: #fff
-  padding: 16px
-  text-align: center
-  font-size: 20px
 </style>

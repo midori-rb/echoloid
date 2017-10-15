@@ -1,3 +1,5 @@
+import { MessageBox } from 'element-ui';
+import ElementLocale from 'element-ui/lib/locale';
 import request from '../../utils/request';
 import * as types from '../types';
 
@@ -36,7 +38,9 @@ const actions = {
     });
     if (res.ok) { commit(types.SET_USER, res); }
     if (res.status === 401) {
-      commit(types.SHOW_ALERT, 'passwordIncorrect');
+      MessageBox.alert(ElementLocale.t('passwordIncorrect'), 'Alert', {
+        confirmButtonText: 'Confirm',
+      });
     }
   },
 

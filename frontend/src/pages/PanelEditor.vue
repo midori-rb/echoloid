@@ -2,19 +2,51 @@
 .container
   admin-navigator
   .panel-editor
-    textarea.editor(v-model="input", @input="update")
+    textarea.editor(v-model="atom.content", @input="update")
     .preview-container
       .preview.markdown-body(v-html="compiled")
-    div.meta
-      div
-        | Hello World
+    .meta
+      el-form(label-width="80px")
+        el-form-item(:label="$t('title')")
+          el-input(v-model="atom.title")
+        el-form-item(:label="$t('category')")
+          el-select(v-model="values", multiple)
+            el-option(
+              v-for="category in categories",
+              :key="category.value",
+              :label="category.label",
+              :value="category.value")
+        el-form-item(:label="$t('language')")
+          el-select(v-model="atom.language")
+            el-option(
+              v-for="language in languages",
+              :key="language.value",
+              :label="language.label",
+              :value="language.value",
+              :disabled="language.disabled")
+        el-form-item(:label="$t('abstract')")
+          el-input(
+            type="textarea",
+            v-model="atom.abstract",
+            :autosize="{ minRows: 2, maxRows: 4}",
+            :placeholder="$t('abstract')",
+          )
+        el-form-item(:label="$t('visibility')")
+          el-switch(on-text="", off-text="", v-model="atom.visibility")
+        el-form-item
+          el-button(type="primary", @click="submit")
+            | {{ $t('submit') }}
+          el-button
+            | {{ $t('cancel') }}
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import debounce from 'lodash/debounce';
 import * as marked from 'marked';
 import * as highlight from 'highlight.js';
 import AdminNavigator from '@/components/AdminNavigator';
+import LanguageOptions from '@/translation/options';
 
 export default {
   components: {
@@ -22,26 +54,70 @@ export default {
   },
   data() {
     return {
-      input: '# hello',
       compiled: '<h1 id=\'hello\'>hello</h1>\n',
+      values: [],
+      categories: [],
+      languages: LanguageOptions,
     };
   },
+  computed: mapState([
+    'user',
+    'atom',
+  ]),
   methods: {
     update() {
       debounce(this.mark, 300)();
     },
     mark() {
-      this.compiled = marked(this.input, { sanitize: true });
+      this.compiled = marked(this.atom.content, { sanitize: true });
     },
+    submit() {
+      if (this.$route.params.id) {
+        // Update
+        this.updateAtom({
+          token: this.user.token,
+          id: this.$route.params.id,
+          title: this.atom.title,
+          abstract: this.atom.abstract,
+          language: this.atom.language,
+          image: this.atom.image,
+          content: this.atom.content,
+        });
+        return;
+      }
+      this.postAtom({
+        token: this.user.token,
+        title: this.atom.title,
+        abstract: this.atom.abstract,
+        language: this.atom.language,
+        image: this.atom.image,
+        content: this.atom.content,
+      });
+    },
+    fetchData() {
+      if (this.$route.params.id) {
+        this.getAtom({
+          token: this.user.token,
+          id: this.$route.params.id,
+        });
+      }
+    },
+    ...mapActions([
+      'getAtom',
+      'updateAtom',
+      'postAtom',
+    ]),
   },
-  mounted() {
+  watch: {
+    $route: 'fetchData',
+  },
+  created() {
     marked.setOptions({
       highlight(code) {
-        console.log('Here');
-        console.log(highlight.highlightAuto(code).value);
         return highlight.highlightAuto(code).value;
       },
     });
+    this.fetchData();
   },
 };
 </script>
@@ -51,9 +127,10 @@ export default {
 
 .panel-editor
   display flex
-  height: calc(100vh - 97px)
-  padding: 17px 17px 0 17px
+  height: calc(100vh - 110px)
+  padding: 20px 20px 0 20px
 .editor
+  font-family monospace
   flex 1
   resize none
   border none
@@ -66,7 +143,6 @@ export default {
   height 100%
   overflow scroll
   padding 15px
-  
 .meta
-  width: 200px
+  width: 300px
 </style>

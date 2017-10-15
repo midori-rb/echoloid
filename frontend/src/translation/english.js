@@ -1,3 +1,5 @@
+import enLocale from 'element-ui/lib/locale/lang/en';
+
 export default {
   intro: 'Intro',
   blog: 'Blog',
@@ -8,4 +10,14 @@ export default {
   username: 'Username',
   password: 'Password',
   login: 'Log in',
+  title: 'Title',
+  abstract: 'Abstract',
+  time: 'Time',
+  category: 'Category',
+  language: 'Language',
+  publishTime: 'Publish Time',
+  visibility: 'Visibility',
+  submit: 'Submit',
+  cancel: 'Cancel',
+  ...enLocale,
 };

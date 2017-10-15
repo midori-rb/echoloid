@@ -8,7 +8,9 @@
     }],
     "stage-3"
   ],
-  "plugins": ["transform-runtime"],
+  "plugins": [
+    "transform-runtime"
+  ],
   "env": {
     "test": {
       "presets": ["env", "stage-3"],

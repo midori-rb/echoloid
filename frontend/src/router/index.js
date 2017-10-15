@@ -29,6 +29,11 @@ const routes = [
     component: PanelEditor,
   },
   {
+    path: '/admin/editor/:id',
+    title: 'Admin Panel: Editor',
+    component: PanelEditor,
+  },
+  {
     path: '/blog',
     title: 'Blog',
     redirect: '/blog/page/1',

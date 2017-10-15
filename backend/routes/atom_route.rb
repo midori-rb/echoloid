@@ -36,7 +36,7 @@ class AtomRoute < Midori::API
   post '' do
     user = UserService.auth!(request)
     req = JSON.parse(request.body)
-    Atom.create(
+    row = Atom.create(
       title:  req['title'],
       abstract: req['abstract'],
       language: req['language'],
@@ -44,7 +44,9 @@ class AtomRoute < Midori::API
       content: req['content'],
       user: user,
     )
-    ''
+    {
+      atom_id: row.id,
+    }.to_json
   end
 
   put '/:atom_id' do
@@ -60,7 +62,7 @@ class AtomRoute < Midori::API
       image: req['image'],
       content: req['content'],
     )
-    ''
+    {}.to_json
   end
 
   delete '/:atom_id' do
@@ -69,6 +71,6 @@ class AtomRoute < Midori::API
     raise NotFoundError if row.nil?
     raise UnauthorizedError unless user.editable? || row.user == user
     row.delete
-    ''
+    {}.to_json
   end
 end

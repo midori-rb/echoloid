@@ -9,7 +9,7 @@ class UserRoute < Midori::API
       req['usergroup'],
     )
     @status = 201
-    ''
+    {}.to_json
   end
 
   post '/login' do
@@ -37,7 +37,7 @@ class UserRoute < Midori::API
     user.update(
       password: UserService.generate_password(req['password'])
     )
-    ''
+    {}.to_json
   end
 
   put '/:user_id' do
@@ -46,6 +46,6 @@ class UserRoute < Midori::API
     val = { usergroup: req['usergroup'] }
     val[:password] = req['password'] unless req['password'].nil?
     User.where(id: request.params['user_id'])&.first&.update(val)
-    ''
+    {}.to_json
   end
 end

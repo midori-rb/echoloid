@@ -4,6 +4,10 @@
   .container
     .blogs
       blog-card(v-for="blog in blogs", :key="blog.id")
+      el-pagination(:current-page.sync="currentPage",
+                    :page-size="1",
+                    layout="prev, pager, next, jumper",
+                    :total="totalPage")
     .side-bar
       | 123
 </template>
@@ -19,6 +23,8 @@ export default {
     Navigator,
   },
   data: () => ({
+    currentPage: 1,
+    totalPage: 10,
     blogs: [
       {
         id: 1,
@@ -29,6 +35,62 @@ export default {
       },
       {
         id: 2,
+        title: '你好世界',
+        author: 'TEST',
+        thumbnail: 'http://via.placeholder.com/350x150',
+        abstract: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      },
+      {
+        id: 3,
+        title: '你好世界',
+        author: 'TEST',
+        thumbnail: 'http://via.placeholder.com/350x150',
+        abstract: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      },
+      {
+        id: 4,
+        title: '你好世界',
+        author: 'TEST',
+        thumbnail: 'http://via.placeholder.com/350x150',
+        abstract: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      },
+      {
+        id: 5,
+        title: '你好世界',
+        author: 'TEST',
+        thumbnail: 'http://via.placeholder.com/350x150',
+        abstract: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      },
+      {
+        id: 6,
+        title: '你好世界',
+        author: 'TEST',
+        thumbnail: 'http://via.placeholder.com/350x150',
+        abstract: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      },
+      {
+        id: 7,
+        title: '你好世界',
+        author: 'TEST',
+        thumbnail: 'http://via.placeholder.com/350x150',
+        abstract: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      },
+      {
+        id: 8,
+        title: '你好世界',
+        author: 'TEST',
+        thumbnail: 'http://via.placeholder.com/350x150',
+        abstract: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      },
+      {
+        id: 9,
+        title: '你好世界',
+        author: 'TEST',
+        thumbnail: 'http://via.placeholder.com/350x150',
+        abstract: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      },
+      {
+        id: 10,
         title: '你好世界',
         author: 'TEST',
         thumbnail: 'http://via.placeholder.com/350x150',
