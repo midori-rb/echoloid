@@ -20,7 +20,11 @@ class PostRoute < Midori::API
     end
     result = {}
     data.each { |row| result[row.id] = row if result[row.id].nil? || data[:language] == lang }
-    result.values.to_json
+    {
+      current_page: page,
+      total_page: (filter.count / 10.0).ceil,
+      data: result.values,
+    }
   end
 
   get '/:post_id' do

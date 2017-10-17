@@ -2,14 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     base62 (1.0.0)
-    em-midori (0.4.3)
+    hiredis (0.6.1)
+    midori-contrib (0.1.2)
+      midori.rb (~> 0.4)
+    midori.rb (0.4.4)
       midori_http_parser (~> 0.6.1)
       murasaki (~> 0.1)
       mustermann (~> 1.0)
-    hiredis (0.6.1)
-    midori-contrib (0.1.1)
-      em-midori (~> 0.3)
-    midori_http_parser (0.6.1.3)
+    midori_http_parser (0.6.2)
     murasaki (0.1.0)
       nio4r (~> 2.0)
     mustermann (1.0.1)
@@ -21,10 +21,10 @@ GEM
       nest (~> 3)
       redic (~> 1.5.0)
       stal
-    rake (12.0.0)
+    rake (12.1.0)
     redic (1.5.0)
       hiredis
-    sequel (5.0.0)
+    sequel (5.1.0)
     stal (0.3.0)
       redic (~> 1.5)
     uuid64 (0.0.7)
@@ -35,9 +35,9 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0)
-  em-midori (~> 0.4.3)
   hiredis (~> 0.6.0)
   midori-contrib (~> 0.1.0)
+  midori.rb (~> 0.4.3)
   mysql2 (~> 0.4)
   ohm (~> 3.0)
   rake (~> 12.0)

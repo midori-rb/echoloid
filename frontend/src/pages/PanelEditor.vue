@@ -4,18 +4,20 @@
   .panel-editor
     textarea.editor(v-model="atom.content", @input="update")
     .preview-container
-      .preview.markdown-body(v-html="compiled")
+      .preview.markdown-body(v-html="atom.compiled")
     .meta
       el-form(label-width="80px")
         el-form-item(:label="$t('title')")
           el-input(v-model="atom.title")
-        el-form-item(:label="$t('category')")
-          el-select(v-model="values", multiple)
-            el-option(
-              v-for="category in categories",
-              :key="category.value",
-              :label="category.label",
-              :value="category.value")
+        el-form-item(:label="$t('thumbnail')")
+          el-input(v-model="atom.image")
+        //- el-form-item(:label="$t('category')")
+        //-   el-select(v-model="values", multiple)
+        //-     el-option(
+        //-       v-for="category in categories",
+        //-       :key="category.value",
+        //-       :label="category.label",
+        //-       :value="category.value")
         el-form-item(:label="$t('language')")
           el-select(v-model="atom.language")
             el-option(
@@ -31,20 +33,16 @@
             :autosize="{ minRows: 2, maxRows: 4}",
             :placeholder="$t('abstract')",
           )
-        el-form-item(:label="$t('visibility')")
-          el-switch(on-text="", off-text="", v-model="atom.visibility")
         el-form-item
           el-button(type="primary", @click="submit")
             | {{ $t('submit') }}
-          el-button
+          el-button(@click="cancel")
             | {{ $t('cancel') }}
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
 import debounce from 'lodash/debounce';
-import * as marked from 'marked';
-import * as highlight from 'highlight.js';
 import AdminNavigator from '@/components/AdminNavigator';
 import LanguageOptions from '@/translation/options';
 
@@ -54,7 +52,6 @@ export default {
   },
   data() {
     return {
-      compiled: '<h1 id=\'hello\'>hello</h1>\n',
       values: [],
       categories: [],
       languages: LanguageOptions,
@@ -68,8 +65,8 @@ export default {
     update() {
       debounce(this.mark, 300)();
     },
-    mark() {
-      this.compiled = marked(this.atom.content, { sanitize: true });
+    cancel() {
+      this.$router.push('/admin');
     },
     submit() {
       if (this.$route.params.id) {
@@ -106,17 +103,13 @@ export default {
       'getAtom',
       'updateAtom',
       'postAtom',
+      'mark',
     ]),
   },
   watch: {
     $route: 'fetchData',
   },
   created() {
-    marked.setOptions({
-      highlight(code) {
-        return highlight.highlightAuto(code).value;
-      },
-    });
     this.fetchData();
   },
 };

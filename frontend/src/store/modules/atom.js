@@ -1,5 +1,13 @@
+import * as marked from 'marked';
+import * as highlight from 'highlight.js';
 import request from '../../utils/request';
 import * as types from '../types';
+
+marked.setOptions({
+  highlight(code) {
+    return highlight.highlightAuto(code).value;
+  },
+});
 
 const state = {
   id: undefined,
@@ -8,7 +16,7 @@ const state = {
   language: 'language',
   image: '',
   content: '# hello',
-  visibility: true,
+  compiled: '<h1 id=\'hello\'>hello</h1>\n',
 };
 
 const mutations = {
@@ -19,6 +27,11 @@ const mutations = {
     st.language = payload.language;
     st.image = payload.image;
     st.content = payload.content;
+    st.compiled = marked(st.content, { sanitize: true });
+  },
+
+  [types.SET_COMPILED]: (st) => {
+    st.compiled = marked(st.content, { sanitize: true });
   },
 };
 
@@ -61,6 +74,10 @@ const actions = {
     if (res.ok) {
       window.location.href = '/admin';
     }
+  },
+
+  async mark({ commit }) {
+    commit(types.SET_COMPILED);
   },
 };
 

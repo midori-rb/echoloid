@@ -19,7 +19,7 @@ export default [
     disabled: true,
   }, {
     value: 'zh-tw',
-    label: '臺灣正體',
+    label: '臺灣繁體',
     disabled: true,
   },
 ];

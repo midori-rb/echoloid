@@ -10,7 +10,7 @@ gem 'mysql2', '~> 0.4', require: false
 
 gem 'uuid64'
 # gem 'em-midori', require: 'midori', :path => '/Users/delton/WorkSpace/Midori/midori'
-gem 'em-midori', '~> 0.4.3', require: 'midori'
+gem 'midori.rb', '~> 0.4.3'
 gem 'midori-contrib', '~> 0.1.0', require: %w(
     midori-contrib
     midori-contrib/file

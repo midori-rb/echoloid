@@ -30,6 +30,7 @@ const routes = [
   },
   {
     path: '/admin/editor/:id',
+    name: 'editor',
     title: 'Admin Panel: Editor',
     component: PanelEditor,
   },

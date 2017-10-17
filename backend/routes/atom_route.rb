@@ -1,9 +1,9 @@
 class AtomRoute < Midori::API
   get '' do
     user = UserService.auth!(request)
-    page = (request.params['page'][0] || '1').to_i
+    page = (request.query_params['page'][0] || '1').to_i
     filter = user.editable? ? Atom : Atom.where(user: user)
-    filter.order { posts[:published_time] }.reverse.map do |row|
+    data = filter.order('created_time').reverse.limit(10).offset((page - 1) * 10).map do |row|
       {
         post_id: row.post_id,
         atom_id: row.id,
@@ -12,8 +12,15 @@ class AtomRoute < Midori::API
         image: row.image,
         language: row.language,
         author: row.user.username,
+        created_time: row.created_time,
+        updated_time: row.updated_time,
       }
     end
+    {
+      current_page: page,
+      total_page: (filter.count / 10.0).ceil,
+      data: data,
+    }.to_json
   end
 
   get '/:atom_id' do
@@ -30,6 +37,8 @@ class AtomRoute < Midori::API
       language: row.language,
       author: row.user.username,
       content: row.content,
+      created_time: row.created_time,
+      updated_time: row.updated_time,
     }.to_json
   end
 
