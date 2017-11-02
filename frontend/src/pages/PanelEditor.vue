@@ -97,10 +97,13 @@ export default {
           token: this.user.token,
           id: this.$route.params.id,
         });
+      } else {
+        this.clearAtom();
       }
     },
     ...mapActions([
       'getAtom',
+      'clearAtom',
       'updateAtom',
       'postAtom',
       'mark',

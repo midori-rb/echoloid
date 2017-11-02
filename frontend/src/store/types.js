@@ -1,6 +1,6 @@
 // Mutations
 export const SET_ATOM = 'atom/SET_ATOM';
-export const SET_ATOM_ID = 'atom/SET_ATOM_ID';
+export const CLEAR_ATOM = 'atom/CLEAR_ATOM';
 export const SET_COMPILED = 'atom/SET_COMPILED';
 export const SET_ATOMS = 'atoms/SET_ATOMS';
 export const DELETE_ATOM = 'atoms/DELETE_ATOM';

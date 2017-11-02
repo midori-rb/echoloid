@@ -33,9 +33,23 @@ const mutations = {
   [types.SET_COMPILED]: (st) => {
     st.compiled = marked(st.content, { sanitize: true });
   },
+
+  [types.CLEAR_ATOM]: (st) => {
+    st.id = undefined;
+    st.title = '';
+    st.abstract = '';
+    st.language = 'language';
+    st.image = '';
+    st.content = '# hello';
+    st.compiled = '<h1 id=\'hello\'>hello</h1>\n';
+  },
 };
 
 const actions = {
+  clearAtom({ commit }) {
+    commit(types.CLEAR_ATOM);
+  },
+
   async getAtom({ commit }, payload) {
     const res = await request('GET', `/atom/${payload.id}`, {}, {}, {
       Token: payload.token,
