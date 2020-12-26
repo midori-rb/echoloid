@@ -73,11 +73,11 @@ export default {
   margin-top 13px
   line-height 12px
 
-.button 
+.button
   padding 0
   float right
 
-.image 
+.image
   width 100%
   display block
 

@@ -7,7 +7,7 @@ class User < Sequel::Model
   end
 
   def editor?
-    self.usergroup == 1 
+    self.usergroup == 1
   end
 
   def editable?

@@ -33,7 +33,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', {
       'optionalDependencies': ['test/unit/index.js']
     }],
-    "no-param-reassign": [2, { 
+    "no-param-reassign": [2, {
       "props": false
     }],
     'no-alert': 0,

@@ -78,7 +78,7 @@ export default {
   padding 0
   float right
 
-.image 
+.image
   width 100%
   display block
 
